@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title> My PT</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("table").mousedown(function(){
+                $("td").mouseover(function () {
+                    $(this).css("background-color","red");
+                })
+                $("td").mouseout(function () {
+                    $(this).css("background-color","white");
+                })
+            });
+        });
+        $(document).ready(function(){
+            $("p").mouseover(function(){
+                $("p").css("background-color", "yellow");
+            });
+            $("p").mouseout(function(){
+                $("p").css("background-color", "lightgray");
+            });
+        });
+
+    </script>
+    <script>
+
+    </script>
+    <style>
+        table.minimalistBlack {
+            border: 0px solid #000000;
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+        }
+        table.minimalistBlack td, table.minimalistBlack th {
+            border: 1px solid #000000;
+            padding: 5px 4px;
+        }
+        table.minimalistBlack tbody td {
+            font-size: 13px;
+        }
+        table.minimalistBlack tfoot td {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+<nav>
+
+</nav>
+<table class="minimalistBlack" id="p" style="height: 194px;" width="577">
+    <tbody>
+    <tr>
+        <td class="item"></td><td class="item"></td><td class="item"></td><td class="item"></td><td class="item"></td></tr>
+    <tr>
+        <td></td><td></td><td></td><td></td><td></td></tr>
+    <tr>
+        <td></td><td></td><td></td><td></td><td></td></tr>
+    <tr>
+        <td></td><td></td><td></td><td></td><td></td></tr>
+    <tr>
+        <td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+    </tr>
+
+    <p>Move the mouse pointer over this paragraph.</p>
+</table>
+</body>
+<footer>
+
+</footer>
+</html>
+
+

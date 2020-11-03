@@ -1,0 +1,31 @@
+<html> 
+    <head> 
+    <meta name="viewport" content="width=320; user-scalable=no" /> 
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
+    <title>Camera</title> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/sb-admin-2.css"/>
+    <link rel="stylesheet" href="../css/custom.css?after" type="text/css" media="screen"/>
+    <script>
+     $(document).ready(function(){
+          if (!('url' in window) && ('webkitURL' in window)) {
+               window.URL = window.webkitURL; 
+               }
+        $('#camera').change(function(e){
+             $('#pic').attr('src', URL.createObjectURL(e.target.files[0]));
+              });
+               }); 
+</script> 
+</head> 
+<body> 
+   <?php 
+    echo "phptest";
+   ?>
+   
+    <input type="file" id="camera" name="camera" capture="camera" accept="image/*" />
+     <br /> 
+     <img id="pic" style="width:100%;" /> 
+
+   
+</body> 
+</html>

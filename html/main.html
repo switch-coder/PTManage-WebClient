@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+메인페이지
+1.헤더
+    jquery font-awesome bootstrap 내가 만든 css 추가
+
+2. 바디
+    헤더 내비   load
+    사이드 내비 load
+    달력 테이블
+
+3.js
+    이번달 달력을 테이블에 넣는다. buildCalender(이번달 마지막날,지난달,이번달 시작날)
+    상단에 prev_month 혹은 next_month 버튼을 누르면 이전 혹은 다음달로 이동한다.
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>MY PTMANEGER</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="../js/login_session.js"></script>
+    <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../css/table.css" />
+    <link rel="stylesheet" href="../css/sb-admin-2.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+    <!-- 폰트 어썸 아이콘   -->
+
+</head>
+
+<body>
+    <!-- 헤더 네비게이션-->
+    <nav id="header">
+        <?php include 'header_nav.html'; ?>
+    </nav>
+
+    <script>
+        document.querySelector("#main_page").className = "act";
+        login_session();
+        $("#side_nav").load("./html/side_nav.html");
+    </script>
+
+    <div id="container" class="d-flex">
+
+        <!--        사이드 바-->
+        <div class="side_nav">
+
+
+            <!--            사이드 달력 작성-->
+            <div>
+                <span class='prev_month'><button class="icon_btn btn btn-outline-dark " id="side_prev_month"><i
+                            class="fas fa-angle-left fa-2x"></i></button></span>
+                <span class="next_month"><button class="btn btn-outline-dark icon_btn" id="side_next_month"><i
+                            class="fas fa-angle-right fa-2x"></i></button></span>
+            </div>
+
+            <!--            지난달 보여주기-->
+            <div class="side_select_day" id="pre_side_select_day"> </div>
+            <div>
+                <table class="side_calender" id="pre_side_calender">
+                    <thead>
+                        <tr>
+                            <th>일</th>
+                            <th>월</th>
+                            <th>화</th>
+                            <th>수</th>
+                            <th>목</th>
+                            <th>금</th>
+                            <th>토</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!--            이번다 보여주기-->
+            <div class="side_select_day" id="side_select_day"> </div>
+            <div>
+                <table class="side_calender" id="side_calender">
+                    <thead>
+                        <tr>
+                            <th>일</th>
+                            <th>월</th>
+                            <th>화</th>
+                            <th>수</th>
+                            <th>목</th>
+                            <th>금</th>
+                            <th>토</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!--            다음달 보여주기-->
+            <div class="side_select_day" id="next_side_select_day"> </div>
+            <div>
+                <table class="side_calender" id="next_side_calender">
+                    <thead>
+                        <tr>
+                            <th>일</th>
+                            <th>월</th>
+                            <th>화</th>
+                            <th>수</th>
+                            <th>목</th>
+                            <th>금</th>
+                            <th>토</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div><!--        사이드 바-->
+
+
+        <!--   페이지 내용     -->
+        <div class="content">
+            <!--            로딩 -->
+            <div id="roader-container" class="roader-container">
+                <div class="roader-rotate"></div>
+                <div class="roader-txt">roading</div>
+            </div>
+
+
+            <!--            상단 날짜 및 버튼-->
+            <div id="top_panel" class="hidden">
+                <span class='prev_month'><button onclick="prev_month()" class="icon_btn btn btn-outline-dark "
+                        id="prev_month"><i class="fas fa-angle-left fa-2x"></i></button></span>
+                <span class="btn_today"><button onclick="on_toady()" class="btn btn-outline-dark ">오늘</button></span>
+                <span class="next_month"><button onclick="next_month()" class="btn btn-outline-dark icon_btn"
+                        id="next_month"><i class="fas fa-angle-right fa-2x"></i></button></span>
+                <span class="select_day" id="select_day"> </span>
+                <!--                <span style="float:right"><button class="btn btn-outline-dark" onclick="">스케줄 생성</button></span>-->
+
+            </div>
+
+            <!--            달력  -->
+            <div class="hidden" id="main-roading" style="display:flex; height:100%">
+                <table class="main_calender" id="main_calendar">
+                    <thead>
+                        <tr>
+                            <th>일</th>
+                            <th>월</th>
+                            <th>화</th>
+                            <th>수</th>
+                            <th>목</th>
+                            <th>금</th>
+                            <th>토</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div><!-- content-->
+
+
+    </div>
+    <!-- madal 모달창 -->
+    <!-- <div class="card-body"> -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal_content">
+            <div style="float:right">
+                <button type="button" id="modal-close" class='btn btn-outline-dark'
+                    style='border:none;padding:0px 7px 0px 7px;margin:0px;font-size:20px'>
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <p style="text-align: center;"><span id="modal_title" style="font-size: 24pt;">스케줄 추가</span></p>
+
+            <div class="modal_grid">
+
+                <div class="icon grid_item"><i class="far fa-calendar-alt fa-2x"></i></div>
+                <div class="grid_item">
+                    <span id="start_date"></span>
+                    <span> ~ </span>
+                    <span id="end_date"> </span>
+                    <input type="hidden" id="start"> <input type="hidden" id="end">
+                </div>
+
+
+
+                <div class="icon grid_item"><i class="far fa-clock fa-2x"></i></div>
+                <div class="grid_item">
+                    <sapn>시작 시간 : </sapn>
+                    <input id="start_time" type="time">
+                </div>
+
+
+                <div class="icon grid_item"><i class="far fa-clock fa-2x"></i></div>
+                <div class="grid_item">
+                    <sapn>끝나는 시간 : </sapn>
+                    <input id="end_time" type="time">
+                </div>
+
+
+            </div>
+
+            <div class="detail_schedule">
+                <div class="user_item">
+                    <img id="modal_image" src="" width="150" height="150">
+                    <div id="user_detail">
+                        <li id="schedule_index" class="hidden"></li>
+                        <li>
+                            <h3 style="display: inline-block" id="user_name">회원 이름</h3><span id="user_id"
+                                style="margin-left: 5px">(회원 아이디)</span>
+                        </li>
+                        <li><span>나이 : </span><span id="user_age">25</span></li>
+                        <li><span>키(cm) : </span><span id="user_tall">170</span></li>
+                        <li><span>몸무게(kg) : </span><span id="user_weight">60</span></li>
+                    </div>
+                </div>
+                <div class="none_user">
+                    <h2 style="text-align: center">예약자가 없습니다.</h2>
+                </div>
+
+                <div class="modal_time_zone">
+                    <div class="modal_grid">
+                        <div class="icon grid_item"><i class="far fa-clock fa-2x"></i></div>
+                        <div class="grid_item">
+                            <span>시작 시간 : </span> <span id="modal_start_time">2020년 </span><span id=start_month>7월
+                            </span><span id="start_day">01일</span><span id="schedule_start_time"> 19:00</span><input
+                                class="hidden" id="modify_start_time" type="time">
+                            <sapn> 부터</sapn>
+                        </div>
+                    </div>
+                    <div class="modal_grid">
+                        <div class="icon grid_item"><i class="far fa-clock fa-2x"></i></div>
+                        <div class="grid_item">
+                            <span>마치는 시간 : </span><span id="modal_end_time">2020년 </span><span id=end_month>7월
+                            </span><span id="end_day">01일</span><span id="schedule_end_time"> 20:00</span><input
+                                class="hidden" id="modify_end_time" type="time">
+                            <sapn> 까지</sapn>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <p style="padding:0px 0px 0px 0px" id="placesList"></p>
+            <div id="pagination"></div>
+
+            <div style="text-align:center">
+                <button type="button" onclick="remove_schedule()" id="remove_btn"
+                    class="none_user_btn modal_btn">삭제</button>
+                <button type="button" onclick="modify_time()" id="modify_time" class="none_user_btn modal_btn">시간
+                    변경</button>
+                <button type=button class="modal_btn" id="modal_pic">선택</button>
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+
+
+</body>
+
+<script src="../js/main_calendar.js"></script>
+<script>
+    // 날짜에 0자 붙여주기
+    let mon = today_year + "-" + leadingZeros(today_month, 2) + "-%";
+    get_PT_class(mon);
+// ------------------------  스케줄 가져오기 ----------------------------------------
+
+
+
+</script>
+
+</html>

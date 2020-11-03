@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>일지 작성</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- 폰트 어썸 아이콘   -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 헤더 네비게이션-->
+    <nav id="header"><?php include 'header_nav.html'; ?></nav>
+    <script></script>
+    <div id="container">
+
+        <!--   페이지 내용     -->
+        <div class="content" style="padding:20px ">
+
+            <!--pt일지 보여주기-->
+            <div class="add_log">
+
+                <div class="border_radius">
+                    <div>
+                        <!--날짜 선택-->
+                        <h3 style="color: black"><strong>피티일지 작성</strong></h3>
+                        <select id="select_day"></select>
+                    </div>
+                    <div class="routine category">
+                        <!--운동루틴-->
+                        <h5 class="border_bottom">운동 루틴</h5>
+                        <div class="add_routine">
+                            <div class="head">
+                                <span>운동이름</span>
+                                <span>반복 수</span>
+                                <span>세트 수</span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="add_routine" id="add_routine">
+                            <div>
+                                <span><input type="text" placeholder="싯업"></span>
+                                <span><input type="number" placeholder="15" max="999" step="1"></span>
+                                <span><input type="number" placeholder="5" max="999" step="1"></span>
+                                <span><button type="button" class="remove_btn icon_btn"><i
+                                            class="fas fa-minus-circle fa-2x"></i></button></span>
+                            </div>
+                        </div>
+                        <button type="button" class="border_radius btn_background" onclick="add_routine()">추가</button>
+
+                    </div>
+                    <div class="category">
+                        <!-- 인바디 수치 막대 차트로 보여주기-->
+                        <h5 class="border_bottom">인바디</h5>
+                        <table class="add_routine" id="">
+                            <tbody>
+                                <tr>
+                                    <td>몸무게(kg)</td>
+                                    <td><input id="weight" type="number" max="200" min="30"></td>
+                                    <td>골격근량(kg)</td>
+                                    <td><input id="muscle" type="number" max="100" min="10"></td>
+                                    <td>체지방량(%)</td>
+                                    <td><input id="fat" type="number" max="100" min="0"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="category">
+                        <!-- 특이사항-->
+                        <h5 class="border_bottom">특이사항</h5>
+                        <div class="uniqueness" id="uniqueness">
+                            <textarea id="text_uniqueness" class="" placeholder="특이사항을 기입해주세요"></textarea>
+                        </div>
+                    </div>
+                    <div style="display: flex ;justify-content: center;">
+                        <button onclick="complete()" type="button" class="btn_background border_radius btn_complete">작성
+                            완료</button>
+                        <button onclick="cancel()" type="button"
+                            class="btn_background border_radius btn_complete">취소</button>
+                    </div>
+
+                </div>
+                <!-- borderradious -->
+
+            </div>
+            <!-- addlog -->
+
+        </div>
+        <!-- contents -->
+
+
+    </div>
+    <!-- container -->
+
+
+
+    <link rel="stylesheet" href="../css/sb-admin-2.css" />
+    <link rel="stylesheet" href="../css/custom.css?after" type="text/css" media="screen" />
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script src="../js/add_pt.js"></script>
+<script>
+    $("#header").load("./header_nav.html");
+    $("#side_nav").load("./side_nav.html");
+    insert_day();
+</script>
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.remove_btn', function () {
+            const routine = document.getElementById('add_routine').childNodes;
+            if (routine.length <= 1) {
+                alert('더이상 지울수 없습니다');
+                return;
+            }
+            let parent = $(this).parent().parent();
+            parent.remove();
+            console.log(parent);
+
+
+            //버블링 막아줌
+            over = false;
+            isMouseDown = false;
+
+            return false;
+        });
+    })
+
+</script>
+
+</html>
